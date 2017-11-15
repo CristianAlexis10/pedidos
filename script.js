@@ -45,7 +45,7 @@ $(function() {
           $( "ul", $trash ) :
           $( "<ul class='gallery ui-helper-reset'/>" ).appendTo( $trash );
 
-        $item.find( "a.ui-icon-trash" ).remove();
+        $item.find( "a.ui-icon-plus" ).remove();
         $item.append( recycle_icon ).appendTo( $list ).fadeIn(function() {
           $item
             .animate({ width: "48px" })
@@ -56,7 +56,7 @@ $(function() {
     }
 
   // reciclar imagen
-    var trash_icon = "<a href='' title='Delete this image' class='ui-icon ui-icon-trash'>Delete image</a>";
+    var trash_icon = "<a href='' title='Delete this image' class='ui-icon ui-icon-plus'>Delete image</a>";
     function recycleImage( $item ) {
       $item.fadeOut(function() {
         $item
@@ -99,7 +99,7 @@ $(function() {
       var $item = $( this ),
         $target = $( event.target );
 
-      if ( $target.is( "a.ui-icon-trash" ) ) {
+      if ( $target.is( "a.ui-icon-plus" ) ) {
         deleteImage( $item );
       } else if ( $target.is( "a.ui-icon-zoomin" ) ) {
         viewLargerImage( $target );
@@ -111,6 +111,6 @@ $(function() {
     });
   } );
 
-$('#dos').click(function(){
+$('.dame').click(function(){
   alert('ya dio');
 });
