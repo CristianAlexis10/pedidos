@@ -4,7 +4,7 @@ $(function() {
       $trash = $( "#contenedor-objetos" );
     // hacer que los elementos de la galeria sean arratrables
     $( "li", $gallery ).draggable({
-      cancel: "a.ui-icon", // si se presiona un icono no se activara el arrastre
+      cancel: "a.ui-icon,input,select", // si se presiona un icono no se activara el arrastre
       revert: "invalid", //volver a la posicion inicial si no se suelta en el contenedor
       containment: "document",
       helper: "clone",//para que se clone mientras de arrartra (no obligatorio)
@@ -19,8 +19,10 @@ $(function() {
       },
       drop: function( event, ui ) {
         deleteImage( ui.draggable );
-        // console.log(ui.draggable);
-        // var nn = $('#uno').val();
+        console.log('codigo: '+ui.draggable.context.childNodes[11].value);
+        console.log('cantidad',ui.draggable.context.childNodes[13].value);
+        console.log('color: '+ui.draggable.context.childNodes[15].value);
+        // var nn = $().val();
          // console.log(nn);  //TRAER EL VALOR DE LO QUE SE ARRASTRO
       }
     });

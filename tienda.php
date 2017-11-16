@@ -15,11 +15,17 @@
            <?php 
             foreach($consulta as $row){ ?>
                 <li class="ui-widget-content">
-                      <h5 class="ui-widget-header"><?php echo $row["pro_nompro"]; ?></h5>
+                      <h5 class="ui-widget-header"><?php echo $row["pro_nombre"]; ?></h5>
                       <img src="images/ella/<?php echo $row["pro_img"]; ?>" alt="On top of Kozi kopka" width="96" height="72">
                       <!-- <a href="#" title="" class="ui-icon ui-icon-zoomin"></a> -->
-                      <div class="des">jhhgkhjkhgj</div>
+                      <div class="des"><?php echo $row["pro_des"]; ?></div>
                       <span class="dame">Ver</span>
+                      <input type="txt" value="<?php echo $row["pro_codigo"]; ?>" class='input-value' >
+                     cantidad: <input type="number" value="0" class="input-number-pro" >
+                     <select id="color">
+                       <option value="blanco">Blanco</option>
+                       <option value="rojo">rojo</option>
+                     </select>
                       <a href="" title="Delete this image" class="ui-icon ui-icon-plus"></a>
                 </li>
             <?php } ?>
