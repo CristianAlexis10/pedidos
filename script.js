@@ -1,3 +1,5 @@
+var pedidoTotal = [];
+
 $(function() {
     // guardar la galeria y contenedor en variables
     var $gallery = $( "#gallery" ),
@@ -19,9 +21,17 @@ $(function() {
       },
       drop: function( event, ui ) {
         deleteImage( ui.draggable );
-        console.log('codigo: '+ui.draggable.context.childNodes[11].value);
-        console.log('cantidad',ui.draggable.context.childNodes[13].value);
-        console.log('color: '+ui.draggable.context.childNodes[15].value);
+        var pro_codigo = ui.draggable.context.childNodes[11].value;
+        var pro_cantidad = ui.draggable.context.childNodes[13].value;
+        var pro_color = ui.draggable.context.childNodes[15].value;
+
+        pedidoTotal[pro_codigo]={'cant':pro_cantidad,'color':pro_color};
+
+        console.log(pedidoTotal);
+        // desabilitar botones
+        $('#'+ui.draggable.context.childNodes[13].id).attr('disabled',true);
+        $('#'+ui.draggable.context.childNodes[15].id).attr('disabled',true);
+        // console.log();
         // var nn = $().val();
          // console.log(nn);  //TRAER EL VALOR DE LO QUE SE ARRASTRO
       }
@@ -35,6 +45,15 @@ $(function() {
       },
       drop: function( event, ui ) {
         recycleImage( ui.draggable );//para obtener el valor es igual que arriba
+        // console.log('codigo: '+ui.draggable.context.childNodes[11].value);
+        var codigo = ui.draggable.context.childNodes[11].value;
+
+        $('#'+ui.draggable.context.childNodes[13].id).attr('disabled',false);
+        $('#'+ui.draggable.context.childNodes[15].id).attr('disabled',false);
+        
+       pedidoTotal.splice(codigo, 1);
+
+        console.log(pedidoTotal);
       }
     });
 

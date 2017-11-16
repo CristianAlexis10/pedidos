@@ -21,8 +21,8 @@
                       <div class="des"><?php echo $row["pro_des"]; ?></div>
                       <span class="dame">Ver</span>
                       <input type="txt" value="<?php echo $row["pro_codigo"]; ?>" class='input-value' >
-                     cantidad: <input type="number" value="0" class="input-number-pro" >
-                     <select id="color">
+                     cantidad: <input type="number" value="0" class="input-number-pro" id="<?php echo 'idCan'.$row["pro_codigo"]; ?>">
+                     <select id="<?php echo 'idCo'.$row["pro_codigo"]; ?>">
                        <option value="blanco">Blanco</option>
                        <option value="rojo">rojo</option>
                      </select>
