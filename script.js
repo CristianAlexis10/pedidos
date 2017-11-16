@@ -6,7 +6,7 @@ $(function() {
       $trash = $( "#contenedor-objetos" );
     // hacer que los elementos de la galeria sean arratrables
     $( "li", $gallery ).draggable({
-      cancel: "a.ui-icon,input,select", // si se presiona un icono no se activara el arrastre
+      cancel: "a.fa,input,select", // si se presiona un icono no se activara el arrastre
       revert: "invalid", //volver a la posicion inicial si no se suelta en el contenedor
       containment: "document",
       helper: "clone",//para que se clone mientras de arrartra (no obligatorio)
@@ -21,16 +21,16 @@ $(function() {
       },
       drop: function( event, ui ) {
         deleteImage( ui.draggable );
-        var pro_codigo = ui.draggable.context.childNodes[11].value;
-        var pro_cantidad = ui.draggable.context.childNodes[13].value;
-        var pro_color = ui.draggable.context.childNodes[15].value;
+        // var pro_codigo = ui.draggable.context.childNodes[11].value;
+        // var pro_cantidad = ui.draggable.context.childNodes[13].value;
+        // var pro_color = ui.draggable.context.childNodes[15].value;
 
-        pedidoTotal[pro_codigo]={'cant':pro_cantidad,'color':pro_color};
+        // pedidoTotal[pro_codigo]={'cant':pro_cantidad,'color':pro_color};
 
-        console.log(pedidoTotal);
-        // desabilitar botones
-        $('#'+ui.draggable.context.childNodes[13].id).attr('disabled',true);
-        $('#'+ui.draggable.context.childNodes[15].id).attr('disabled',true);
+        // console.log(pedidoTotal);
+        // // desabilitar botones
+        // $('#'+ui.draggable.context.childNodes[13].id).attr('disabled',true);
+        // $('#'+ui.draggable.context.childNodes[15].id).attr('disabled',true);
         // console.log();
         // var nn = $().val();
          // console.log(nn);  //TRAER EL VALOR DE LO QUE SE ARRASTRO
@@ -45,43 +45,54 @@ $(function() {
       },
       drop: function( event, ui ) {
         recycleImage( ui.draggable );//para obtener el valor es igual que arriba
-        // console.log('codigo: '+ui.draggable.context.childNodes[11].value);
-        var codigo = ui.draggable.context.childNodes[11].value;
+       //  // console.log('codigo: '+ui.draggable.context.childNodes[11].value);
+       //  var codigo = ui.draggable.context.childNodes[11].value;
 
-        $('#'+ui.draggable.context.childNodes[13].id).attr('disabled',false);
-        $('#'+ui.draggable.context.childNodes[15].id).attr('disabled',false);
+       //  $('#'+ui.draggable.context.childNodes[13].id).attr('disabled',false);
+       //  $('#'+ui.draggable.context.childNodes[15].id).attr('disabled',false);
         
-       pedidoTotal.splice(codigo, 1);
+       // pedidoTotal.splice(codigo, 1);
 
-        console.log(pedidoTotal);
+       //  console.log(pedidoTotal);
       }
     });
 
     // eliminar imagen 
         // recycle_icon el que aparece una vez se elimina
-    var recycle_icon = "<a href='' title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>";
+    var recycle_icon = "<a href='' title='Eliminar del pedido' class='fa fa-minus-circle'></a>";
     function deleteImage( $item ) {
       $item.fadeOut(function() {
         var $list = $( "ul", $trash ).length ?
           $( "ul", $trash ) :
           $( "<ul class='gallery ui-helper-reset'/>" ).appendTo( $trash );
 
-        $item.find( "a.ui-icon-plus" ).remove();
+        $item.find( "a.fa-cart-plus" ).remove();
         $item.append( recycle_icon ).appendTo( $list ).fadeIn(function() {
           $item
             .animate({ width: "48px" })
             .find( "img" )
               .animate({ height: "36px" });
         });
+        var pro_codigo =  $item.context.childNodes[9].value;
+        var pro_cantidad = $item.context.childNodes[11].value;
+        var pro_color = $item.context.childNodes[13].value;
+        // console.log( $item.context.childNodes[13].value);
+        pedidoTotal[pro_codigo]={'cant':pro_cantidad,'color':pro_color};
+
+ 
+        console.log(pedidoTotal);
+        // desabilitar botones
+        $('#'+$item.context.childNodes[11].id).attr('disabled',true);
+        $('#'+$item.context.childNodes[13].id).attr('disabled',true);
       });
     }
 
   // reciclar imagen
-    var trash_icon = "<a href='' title='Delete this image' class='ui-icon ui-icon-plus'>Delete image</a>";
+    var trash_icon = "<a href='' title='Agregar al carrirto' class='fa fa-cart-plus'></a>";
     function recycleImage( $item ) {
       $item.fadeOut(function() {
         $item
-          .find( "a.ui-icon-refresh" )
+          .find( "a.fa-minus-circle" )
             .remove()
           .end()
           .css( "width", "96px")
@@ -91,40 +102,25 @@ $(function() {
           .end()
           .appendTo( $gallery )
           .fadeIn();
+
+            var codigo = $item.context.childNodes[9].value;
+            $('#'+$item.context.childNodes[11].id).attr('disabled',false);
+            $('#'+$item.context.childNodes[13].id).attr('disabled',false);
+
+            delete pedidoTotal[codigo];
+
+            console.log(pedidoTotal);
       });
     }
-
-    //ventana modal (no creo)
-    // function viewLargerImage( $link ) {
-    //   var src = $link.attr( "href" ),
-    //     title = $link.siblings( "img" ).attr( "alt" ),
-    //     $modal = $( "img[src$='" + src + "']" );
-
-    //   if ( $modal.length ) {
-    //     $modal.dialog( "open" );
-    //   } else {
-    //     var img = $( "<img alt='" + title + "' width='384' height='288' style='display: none; padding: 8px;' />" )
-    //       .attr( "src", src ).appendTo( "body" );
-    //     setTimeout(function() {
-    //       img.dialog({
-    //         title: title,
-    //         width: 400,
-    //         modal: true
-    //       });
-    //     }, 1 );
-    //   }
-    // }
 
     // Resolve the icons behavior with event delegation
     $( "ul.gallery > li" ).on( "click", function( event ) {
       var $item = $( this ),
         $target = $( event.target );
 
-      if ( $target.is( "a.ui-icon-plus" ) ) {
+      if ( $target.is( "a.fa-cart-plus" ) ) {
         deleteImage( $item );
-      } else if ( $target.is( "a.ui-icon-zoomin" ) ) {
-        viewLargerImage( $target );
-      } else if ( $target.is( "a.ui-icon-refresh" ) ) {
+      } else if ( $target.is( "a.fa-minus-circle" ) ) {
         recycleImage( $item );
       }
 
